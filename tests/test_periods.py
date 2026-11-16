@@ -19,6 +19,7 @@ def test_detect_kickoff_none_without_shape():
     assert detect_kickoff(px, py, team, bx, by, 0, 299, sign=+1) is None
 
 
+@needs_data
 def test_attack_sign_from_metadata():
     assert attack_sign(META) == {1: +1, 2: -1}
 
