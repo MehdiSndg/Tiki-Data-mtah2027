@@ -1,0 +1,55 @@
+# Frozen pre-mixed recipe (ef42d93a3797766a); historical experiments inherit this.
+# ANA MODEL / REFERANS. İki aşamalı (kullanıcı kararı, 22 Ekim 2026 akşam; MASTER_PLAN Ek I.8, J):
+#  1) booster  = a3_joint_kin (core + tags + geo + kin, tempo-D, BAR + 4 DFL ortak eğitim, 5 seed)
+#                -> run.py m0 --config main -> outputs/main_lgbm (probs.npy = ağın girdisi)
+#  2) ağ       = TCN-BiGRU, DFL'de 35-hizalı hedef + 7 DFL maçı (3'ü booster'ın görmediği),
+#                BAR zayıf çapalarıyla ince ayar (d_share 0.55), T-MSE 0.3, 5 seed
+#  3) harman   = log-pool, LightGBM payı 0.25 -> HSMM (beta 1.75 + sınır bonusu gamma 2; Gün 3)
+#  Hepsi: run.py main -> outputs/main/{probs.npy, submission.csv, seeds.json, summary.json}
+#  25 Ekim (upstream kuralı, MASTER_PLAN Ek O.5): maçın el etiketleri hiçbir amaçla kullanılmaz; kod
+#  labels/ okumaz. Aşağıdaki "kör blok" / public gerekçeleri tarihsel; bileşenler DFL LOMO + Metrica ile
+#  yeniden gerekçelendirildi (β +0,008, γ +0,001, temas kapısı +0,001 DFL 7 maç; tc: Ek O.5).
+# Eski main (sadece booster): public 0.7636 / 0.8725, sha 57704680... (outputs/main_lgbm).
+# Gün 4 terfisi (kullanıcı kararı, 24 Ekim gece; MASTER_PLAN Ek M.10-M.11):
+#  - features + 'tc' (dokunuş dizisi): d7_touch_cvx kör 103 possession 0,662 vs 0,643 (P 0,82),
+#    DFL çekirdek iki katta +0,006; public -0,03/-0,05 (kural 3: public seçim yapmaz).
+#  - (24 Ekim gecesi denenen validation.holdout: none tüm veri modeli, sha f78b5e20, public 0,622:
+#    Gün 5'te bölge katlı birleştirmeyle değiştirildi; kopyası outputs/main_alldata.)
+#  Önceki main (tc'siz, tüm bloklar dışlı): sha 71629b45..., outputs/main_pre_tc.
+inherit: a3_joint_kin
+name: main_v1
+# Gün 5 (kullanıcı kararı, 25 Ekim; Ek N.6): gönderim = bölge katlı örneklem dışı birleştirme.
+#  run.py main -> main_rf0..rf3 (4 bölge; her biri bir bölgenin zayıf çapalarını görmeden; 2 bölgeli sürüm
+#  outputs/main_2reg, sha bd6247ba, kör 0,637) -> bölge bölge
+#  birleştirilen olasılıklar tek decode -> outputs/main/submission.csv. Bölgeler sadece top izinden
+#  (validation/regions.py), labels/'a bağlı değil. holdout: none (tüm veri) kaldırıldı (Ek M.11).
+features:
+  groups: [core, tags, geo, kin, tc]
+validation:
+  region_folds: 4
+  # Gün 5 (Ek N.14): iki tohum seti; birleştirmede ortalama + entropi eşlemeli sıcaklık + p80 sınır havuzu.
+  # 26 Ekim (kullanıcı kararı, Ek O.12): RESMİ GÖNDERİM bu iki setli birleşim, sha a2ced42b62c226b1
+  # (temiz klonda birebir tekrar edildi). Tek set (2027) = 77964d3a, outputs/main_set1_77964d3a.
+  region_seeds: [2027, 7027]
+joint:
+  matches: [J03WPY, J03WN1, J03WMX, J03WOH]
+adapt:
+  d_share: 0.55
+  # Gün 6 (kullanıcı kararı, 26 Ekim; Ek P.5-P.6): ağın DFL hedefi gt35 -> gt20 (A-B-A dönüşleri <= 20 kare
+  # birleşir). 2 katta DFL +0,007, Metrica +0,006, kısa possession yakalama artar. gt35 sürümü (sha a2ced42b):
+  # outputs/main_gt35*.
+  dfl_target: gt20
+  extra_matches: [J03WQQ, J03WOY, J03WR9]
+  w_boost: 0.25
+  # Gün 3 (kullanıcı kararı, 23 Ekim; MASTER_PLAN Ek L.3): harman olasılıklarının decoder'ı.
+  # beta 1.75 ensemble yumuşamasını telafi eder; gamma 2 ağın sınır başlığını segment
+  # başlangıcına bonus olarak ekler. Booster aşaması temel decoder'ı kullanır.
+  decoder:
+    emission_scale: 1.75
+    boundary_gamma: 2.0
+    # Gün 5 (Ek N.2): temas kapısı -- boşta uçan topta turnover 14 -> 24, sapmalı değişimde 8,5.
+    contact:
+      gate: true
+seqnet:
+  n_seeds: 5
+  lambda_tmse: 0.3

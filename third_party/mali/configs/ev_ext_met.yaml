@@ -1,0 +1,11 @@
+# 4 Kasım (kullanıcı kararı): yalnız dış veri + Metrica eğitimi. ev_ext (aynı 5 ağ tohumu) + 3 Metrica maçı
+# eğitimde: ham + BAR'a benzetilmiş bozma (top maskesi hariç) + H↔A ikizleri. Metrica LOMO: her Metrica maçı
+# onu görmemiş fold modeliyle puanlanır. Booster DFL-only kalır (Metrica'yı görmez).
+inherit: ev_ext
+name: ev_ext_met
+adapt:
+  metrica_games: [1, 2, 3]
+  metrica_eval: []
+  metrica_corrupt: true
+  eval_matches: [J03WQQ, J03WOY, J03WR9, metrica_1, metrica_2, metrica_3]
+  booster_source: ev_ext

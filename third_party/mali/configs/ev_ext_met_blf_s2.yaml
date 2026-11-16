@@ -1,0 +1,4 @@
+# ev_ext_met_blf, ikinci ag tohum seti.
+inherit: ev_ext_met_bl_s2
+name: ev_ext_met_blf_s2
+metrica_dead_fill: true

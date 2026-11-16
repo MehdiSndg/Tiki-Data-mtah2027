@@ -1,0 +1,5 @@
+# Gün 2: Smart Tagging N/A teams resolved (25/26 throw-ins, 6/6 kick-offs).
+inherit: main_v1
+name: d2_tagfix
+features:
+  tags: {resolve_na: true}

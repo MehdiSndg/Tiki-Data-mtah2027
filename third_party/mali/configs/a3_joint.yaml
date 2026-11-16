@@ -1,0 +1,8 @@
+# Adım 3.3: joint training -- BAR-ATH weak labels (a3_d) + IDSSE/DFL true labels.
+inherit: a3_d
+name: a3_joint
+joint:
+  matches: [J03WPY, J03WN1, J03WMX, J03WOH, J03WQQ, J03WOY, J03WR9]   # the downloaded ones are used
+  bar_share: 0.5          # BAR-ATH rows carry half of the total sample weight, DFL the other half
+  dfl_stride: 4           # every 4th DFL frame (labels are dense; frames are autocorrelated)
+  drop_source_specific: false   # Smart Tagging columns stay (NaN on DFL rows)

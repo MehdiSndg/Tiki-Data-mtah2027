@@ -1,0 +1,7 @@
+# Same paired network seeds, second region; frozen booster matches this region exactly.
+inherit: ev_ha_confirm_base_rf0
+name: ev_ha_confirm_base_rf1
+validation:
+  region_cv: [1, 4]
+adapt:
+  booster_source: main_rf1

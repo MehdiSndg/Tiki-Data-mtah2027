@@ -1,0 +1,10 @@
+# 31 Ekim: gt11 taraması referansı = resmi H↔A tarifi (main_ha_rf1), 3 yeni ağ tohumu 32027..34027.
+inherit: main_ha_rf1
+name: ev_g11_base_rf1
+seqnet:
+  n_seeds: 3
+adapt:
+  booster_source: main_rf1
+  net_seed_offset: 30000
+  eval_matches: [J03WQQ, J03WOY, J03WR9]
+  segment_diagnostics: true

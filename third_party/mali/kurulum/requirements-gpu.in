@@ -1,0 +1,8 @@
+# GPU ekleri (Windows + NVIDIA, CUDA 12.8; RTX 50xx / Blackwell destekli). Temel kilit (requirements.txt)
+# evrensel kalir; bu dosya onun ustune torch ekler. Derleme:
+#   uv pip compile kurulum/requirements-gpu.in --python-platform windows --python-version 3.11 \
+#     --index https://download.pytorch.org/whl/cu128 --index-strategy unsafe-best-match -o kurulum/requirements-gpu.txt
+# Kurulum: uv pip sync kurulum/requirements-gpu.txt (GPU'suz makinede requirements.txt yeter; seqnet testleri atlanir).
+-r requirements.in
+-c requirements.txt       # torch disindaki her surum temel kilitle birebir ayni kalir
+torch==2.11.0+cu128      # Gun 2: zamansal model ailesi (TCN + BiGRU)

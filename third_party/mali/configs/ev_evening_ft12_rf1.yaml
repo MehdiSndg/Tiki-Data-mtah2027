@@ -1,0 +1,5 @@
+# More adaptation, paired with ft4 and the shared ft8 reference; not an early-stop search.
+inherit: ev_evening_base_rf1
+name: ev_evening_ft12_rf1
+adapt:
+  ft_epochs: 12

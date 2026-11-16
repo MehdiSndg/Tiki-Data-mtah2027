@@ -1,0 +1,5 @@
+# Gün 2: joint training with all 7 IDSSE matches.
+inherit: main_v1
+name: d2_7dfl
+joint:
+  matches: [J03WPY, J03WN1, J03WMX, J03WOH, J03WQQ, J03WOY, J03WR9]

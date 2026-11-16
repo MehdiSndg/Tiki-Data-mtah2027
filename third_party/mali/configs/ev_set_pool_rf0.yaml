@@ -1,0 +1,7 @@
+# Same GRU control plus compact team-wise masked mean/max/count DeepSets inputs.
+inherit: ev_set_gru_rf0
+name: ev_set_pool_rf0
+seqnet:
+  use_tokens: true
+  token_pool: deepsets_team
+  token_dim: 16

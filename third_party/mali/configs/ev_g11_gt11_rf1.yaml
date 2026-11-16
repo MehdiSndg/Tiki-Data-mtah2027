@@ -1,0 +1,5 @@
+# 31 Ekim: H↔A omurgasında ağın DFL hedefi gt20 -> gt11 (az bölme; Ek P.5'te v1 tarifinde Metrica +0,012).
+inherit: ev_g11_base_rf1
+name: ev_g11_gt11_rf1
+adapt:
+  dfl_target: gt11

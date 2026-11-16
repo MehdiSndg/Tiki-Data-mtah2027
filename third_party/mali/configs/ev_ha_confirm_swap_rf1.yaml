@@ -1,0 +1,4 @@
+inherit: ev_ha_confirm_base_rf1
+name: ev_ha_confirm_swap_rf1
+adapt:
+  external_team_copies: swap

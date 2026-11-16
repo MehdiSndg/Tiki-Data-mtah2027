@@ -1,0 +1,9 @@
+# Two-seed paired reference on the promoted mixed backbone; reuse its completed booster only.
+inherit: main_rf0
+name: ev_short_main_base_rf0
+seqnet:
+  n_seeds: 2
+adapt:
+  booster_source: main_rf0
+  eval_matches: [J03WQQ, J03WOY, J03WR9]
+  segment_diagnostics: true

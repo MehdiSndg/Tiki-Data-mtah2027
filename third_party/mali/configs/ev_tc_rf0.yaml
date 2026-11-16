@@ -1,0 +1,6 @@
+# Uyumluluk kanıtı (25 Ekim, Ek O.5): main_rf0'nin aynısı + Metrica 1-3 hakem tahmini (eğitimi değiştirmez;
+# DFL LOMO main_rf0 ile birebir aynı çıkmalı).
+inherit: main_v1_rf0
+name: ev_tc_rf0
+adapt:
+  metrica_eval: [1, 2, 3]

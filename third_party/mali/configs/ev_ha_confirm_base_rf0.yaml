@@ -1,0 +1,10 @@
+# Fixed confirmation protocol: five NEW network seeds 12027..16027, same frozen booster.
+inherit: main_rf0
+name: ev_ha_confirm_base_rf0
+seqnet:
+  n_seeds: 5
+adapt:
+  net_seed_offset: 10000
+  booster_source: main_rf0
+  eval_matches: [J03WQQ, J03WOY, J03WR9]
+  segment_diagnostics: true

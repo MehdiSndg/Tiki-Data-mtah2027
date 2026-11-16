@@ -1,0 +1,10 @@
+# 4 Kasım (kullanıcı kararı): yalnız dış veriyle eğitilen aday resmi tarif. main_ext + 3 Metrica maçı eğitimde
+# (ham + BAR'a benzetilmiş bozma, top maskesi hariç + H↔A ikizleri). Bütün katlar (7 DFL + 3 Metrica LOMO):
+# decoder 4 çekirdek DFL'de ayarlanır, booster-görmemiş 3 DFL + Metrica LOMO'da doğrulanır.
+inherit: main_ext
+name: main_ext_met
+adapt:
+  metrica_games: [1, 2, 3]
+  metrica_eval: []
+  metrica_corrupt: true
+  segment_diagnostics: true

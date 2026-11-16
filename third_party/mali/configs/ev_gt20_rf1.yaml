@@ -1,0 +1,7 @@
+# Gün 6 (Ek P.4): ağın DFL hedefi gt20 (main'de gt35). Kısa A-B-A possession'ların bastırılmasını azaltır mı?
+# main_rf1 ile aynı; Metrica 1-3 sadece hakem. Taban: ev_tc_rf1 (gt35, aynı tarif).
+inherit: main_v1_rf1
+name: ev_gt20_rf1
+adapt:
+  dfl_target: gt20
+  metrica_eval: [1, 2, 3]

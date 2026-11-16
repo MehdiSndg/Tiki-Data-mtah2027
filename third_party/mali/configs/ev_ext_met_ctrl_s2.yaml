@@ -1,0 +1,5 @@
+# 10 Kasım: ev_ext_met_ctrl, ikinci ağ tohum seti (ev_ext_met_s2 ile aynı tohumlar).
+inherit: ev_ext_met_ctrl
+name: ev_ext_met_ctrl_s2
+adapt:
+  net_seed_offset: 50000

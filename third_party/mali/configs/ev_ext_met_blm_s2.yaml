@@ -1,0 +1,5 @@
+# ev_ext_met_blm, ikinci ag tohum seti.
+inherit: ev_ext_met_blm
+name: ev_ext_met_blm_s2
+adapt:
+  net_seed_offset: 50000

@@ -1,0 +1,62 @@
+# Shared settings. Experiment configs (e.g. m0.yaml) override keys from here.
+seed: 2027
+
+validation:
+  # Frames excluded from training on both sides of every labelled validation block
+  # (purge 375 + embargo 750; see MASTER_PLAN A3).
+  buffer_frames: 1125
+  # Hand-labelled blocks are read from labels/*.csv (frame,label). The public GT is always a block.
+  labels_dir: labels
+
+preprocess:
+  ball_max_speed_ms: 40.0     # steps faster than this are teleports, not ball motion
+  velocity_half_window: 2     # central difference over +-k frames
+
+features:
+  groups: [core]                # registry names; source-specific groups (tags) only where available
+  context_windows: [25, 75, 250]
+  contrast_windows: [25, 75]
+  oob_tolerance_m: 0.35
+  contact_radius_m: 1.0
+  kinematics: {}                # overrides for features/groups/kinematics.py DEFAULTS
+  pressure: {}                  # overrides for features/groups/pressure.py DEFAULTS
+
+# Acceptance rule (user-approved, 22 Oct 2026). Reference and candidate are both n_seeds-seed
+# ensembles. A candidate is kept only if, versus the current reference:
+#   * public spellF1 improves,
+#   * public macroF1 drops by at most macro_tolerance,
+#   * every band_stats full-match statistic of the candidate's ensemble lies inside
+#     mean +- band_sigmas * std of the REFERENCE's single-seed decodes (re-derived whenever the
+#     reference changes).
+#   (22 Oct, A+B) every ensemble member has its own ball-masking draw (masking.per_seed) and the
+#   band half-width is max(band_sigmas * std, band_floor) so a tight seed spread cannot reject
+#   physically plausible models.
+# 25 Oct (upstream rules): public is not a tuning set -> ablation / adim3 decide on DFL; the bands below
+# (full-match statistics of the reference) still apply.
+acceptance:
+  n_seeds: 5
+  macro_tolerance: 0.01
+  band_sigmas: 2.0
+  band_stats: [dead_share, n_possessions, home_share]
+  band_floor: {dead_share: 0.03, n_possessions: 20, home_share: 0.025}
+  # band_mode (user decision, 22 Oct evening): 'ensemble' = reference ENSEMBLE statistic +- band_floor
+  # (the submission is the seed ensemble); 'seeds' = the earlier seed-spread bands.
+  band_mode: ensemble
+  # The first, fixed bands (Adım 2 v1); kept for the record, no longer used for decisions.
+  fixed_bands:
+    dead_share: [0.30, 0.35]
+    n_possessions: [300, 360]
+    home_share: [0.58, 0.63]
+
+# Ball masking of training copies. per_seed: ensemble member i draws its own masks with seed
+# masking.seed + 1000 i (member 0 = the old fixed draw, so single-seed runs are unchanged).
+# dead_fraction / live_fraction: state-aware masking of sources with TRUE labels (DFL copies):
+# BAR-ATH misses the ball on ~58% of predicted-dead and ~32% of predicted-live graded frames.
+masking:
+  per_seed: true
+  dead_fraction: 0.58
+  live_fraction: 0.32
+
+# DFL referee (pipeline/dfl_referee.py DEFAULTS): ATD-like corruption of the clean DFL track.
+dfl_referee:
+  corruption: state            # state (Adım 3.2) | uniform (Adım 2: 41% everywhere)

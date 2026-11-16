@@ -1,0 +1,7 @@
+# 6 Kasım: booster aşaması = ev_ext + 3 Metrica açık maçı (ham + oyuncu bozmalı kopya, top maskesi yok; her maç eşit
+# ağırlık). Metrica maçı g'yi tahmin eden booster g'yi görmez (decoder_tune.unseen_probs, joint.metrica_games_in).
+# tools/booster_met.py ile yalnız harmanda denendi: Metrica +0,03–0,04 (iki tohum seti), DFL ±0,001.
+inherit: ev_ext
+name: ev_ext_mb
+joint:
+  metrica_booster: [1, 2, 3]

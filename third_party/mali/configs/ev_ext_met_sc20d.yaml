@@ -1,0 +1,5 @@
+# 5 Kasım: 20 SkillCorner maçı (her 2. pencere), yalnız ölü / canlı (bkz. ev_ext_met_scd).
+inherit: ev_ext_met_sc20
+name: ev_ext_met_sc20d
+adapt:
+  skillcorner_team: 0.0

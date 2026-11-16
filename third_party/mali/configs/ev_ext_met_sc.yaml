@@ -1,0 +1,7 @@
+# 4–5 Kasım gece: SkillCorner taraması (yalnız dış veri). ev_ext_met + 8 SkillCorner açık maçı eğitimde
+# (ham + BAR'a benzer bozma, top maskesi yok + H↔A ikizleri; etiket = oyun evreleri). SkillCorner hakem değil:
+# katlar ve 4 kapı ev_ext_met ile aynı (3 görülmemiş DFL + 3 Metrica LOMO), aynı ağ tohumları.
+inherit: ev_ext_met
+name: ev_ext_met_sc
+adapt:
+  skillcorner_games: ["2017461", "2016236", "2015213", "2013725", "2011166", "2010085", "2007721", "2007448"]

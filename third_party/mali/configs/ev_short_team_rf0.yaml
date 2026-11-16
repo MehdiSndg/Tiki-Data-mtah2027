@@ -1,0 +1,8 @@
+# Only change from ev_short_base_rf0: conditional team CE gets x2 on <5 s possessions +/-12 frames.
+inherit: ev_short_base_rf0
+name: ev_short_team_rf0
+adapt:
+  short_team:
+    max_seconds: 5.0
+    pad_frames: 12
+    factor: 2.0

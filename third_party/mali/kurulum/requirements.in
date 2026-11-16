@@ -1,0 +1,38 @@
+# MTAH 2027 — temel proje ortamı (Python 3.11)
+#
+# Bu dosya doğrudan bağımlılıkları listeler. Kurulumda kullanılan, tüm alt bağımlılıkları sabitlenmiş
+# ve Windows/macOS/Linux için ortak kilit dosyası requirements.txt'dir. Bu dosyayı değiştirdikten
+# sonra kilidi yeniden üretin:
+#
+#     uv pip compile kurulum/requirements.in --universal --python-version 3.11 -o kurulum/requirements.txt
+#
+# Derin öğrenme (torch, CUDA 12.8) Tier-2 aşamasında ayrıca eklenecek.
+
+# --- veri ve analiz
+numpy
+pandas
+scipy
+scikit-learn
+pyarrow                 # parquet önbellek dosyaları için
+
+# --- resmi starter araçları (repo kloppy'yi bu sürüme sabitliyor)
+kloppy==3.18.0
+matplotlib
+
+# --- notebook
+notebook
+ipykernel
+
+# --- video
+av                      # PyAV: video meta verisi, kare okuma (FFmpeg kütüphaneleri pakete gömülü)
+imageio-ffmpeg          # hazır ffmpeg ikili dosyası; kurulum scripti bunu .venv içine 'ffmpeg' olarak koyar
+
+# --- modelleme ve decoding
+lightgbm
+catboost               # Gün 2: ikinci model ailesi (blending), CPU deterministik
+numba
+
+# --- yardımcı
+tqdm
+pyyaml
+pytest

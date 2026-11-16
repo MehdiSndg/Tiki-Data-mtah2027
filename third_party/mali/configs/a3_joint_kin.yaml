@@ -1,0 +1,5 @@
+# Adım 3.3 + kin: the group that gained most on DFL with real labels (+0.031).
+inherit: a3_joint
+name: a3_joint_kin
+features:
+  groups: [core, tags, geo, kin]

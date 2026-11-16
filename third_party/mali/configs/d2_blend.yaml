@@ -1,0 +1,5 @@
+# Gün 2 öğle: LightGBM/CatBoost blend on main (DFL alignment unchanged).
+inherit: main_v1
+name: d2_blend
+model:
+  families: [lgbm, catboost]

@@ -1,0 +1,8 @@
+# Gün 7 (Ek Q.1) B: main_rf0 tarifi, DFL v2 bozmayla eğitilir (booster + ağ). Normal LOMO = v2 hakem;
+# ek hakem = v1 (eski, sadece top maskesi).
+inherit: main_v1_rf0
+name: ev_tr2_rf0
+dfl_referee: {ball_smooth_frames: 13, ball_offset_m: 0.5, player_smooth_frames: 15, player_gap_frac: 0.07, player_gap_mean_s: 3.8, dead_carry_prob: 0.25, dead_jitter_m: 0.8}
+dfl_referee_eval: {ball_smooth_frames: 0, ball_offset_m: 0.0, player_smooth_frames: 0, player_gap_frac: 0.0, dead_carry_prob: 0.0, dead_jitter_m: 0.0}
+adapt:
+  metrica_eval: [1, 2, 3]

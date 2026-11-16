@@ -1,0 +1,6 @@
+# Gün 7: ağ 3 Metrica açık maçıyla da eğitilir (olay etiketleri; başka maç, kurallara uygun).
+# Metrica skoru LOMO (her maç onu görmeyen modelle). Taban: main_rf0 / ev_gt20_rf0 (gt20, Metrica sadece hakem).
+inherit: main_v1_rf0
+name: ev_met_rf0
+adapt:
+  metrica_games: [1, 2, 3]

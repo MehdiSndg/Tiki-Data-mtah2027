@@ -1,0 +1,6 @@
+# 6 Kasım: ev_ext_met ile aynı tarif, ikinci ağ tohum seti (52027..56027). Aynı makinede tohum oynaklığını ölçer;
+# kat ağları kaydedilir (tools/eval_clean.py ile temiz DFL). Booster aynı (cache_tag değişmez).
+inherit: ev_ext_met
+name: ev_ext_met_s2
+adapt:
+  net_seed_offset: 50000

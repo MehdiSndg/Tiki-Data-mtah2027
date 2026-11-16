@@ -1,0 +1,9 @@
+inherit: main_rf0
+name: ev_set_base_rf0
+seqnet:
+  n_seeds: 2
+adapt:
+  booster_source: main_rf0
+  eval_matches: [J03WQQ, J03WOY, J03WR9]
+  segment_diagnostics: true
+  external_team_copies: swap

@@ -1,0 +1,6 @@
+# 12 Kasim: ev_ext_met_blfd2 + 32 PFF grup maci egitimde (g[::3] + g[2::3]; g[1::3] hakem). skillcorner_stride 2.
+inherit: ev_ext_met_blfd2
+name: ev_ext_met_blfd2_pff32
+adapt:
+  skillcorner_games: ["pff_3812", "pff_3815", "pff_3818", "pff_3821", "pff_3824", "pff_3827", "pff_3830", "pff_3833", "pff_3836", "pff_3839", "pff_3842", "pff_3845", "pff_3848", "pff_3851", "pff_3854", "pff_3857", "pff_3814", "pff_3817", "pff_3820", "pff_3823", "pff_3826", "pff_3829", "pff_3832", "pff_3835", "pff_3838", "pff_3841", "pff_3844", "pff_3847", "pff_3850", "pff_3853", "pff_3856", "pff_3859"]
+  skillcorner_stride: 2

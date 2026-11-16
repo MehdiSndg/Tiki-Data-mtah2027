@@ -1,0 +1,5 @@
+# Temporal control: same scalar inputs, BiGRU without TCN blocks.
+inherit: ev_set_base_rf0
+name: ev_set_gru_rf0
+seqnet:
+  dilations: []

@@ -1,0 +1,7 @@
+# 5 Kasım: dış maçların 3 bozma çekilişi (takım arkadaşının bulgusu: maç başına 3 bozma çekilişi ağları iyileştirdi).
+# ev_ext_met + 2 ek tohum: her tohumda DFL eğitim bozması, DFL v2b bozması ve Metrica v2b kopyası yeniden çekilir
+# (booster olasılığı maçı görmemiş booster'dan, H↔A ikizleriyle). Yalnız eğitim; hakemler tohum 7 kopyaları.
+inherit: ev_ext_met
+name: ev_ext_met_dr3
+adapt:
+  extra_draws: [11, 13]

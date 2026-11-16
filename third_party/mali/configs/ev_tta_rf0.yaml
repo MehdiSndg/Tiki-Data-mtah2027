@@ -1,0 +1,11 @@
+# 1 Kasım: test anı H↔A ortalaması (Rapor 9 Sıra 1) taraması. Resmi H↔A tarifi (main_ha_rf0), 5 yeni ağ tohumu
+# 42027..46027. tta_swap: report -> aynı modeller hem normal hem takaslı görünümü tahmin eder; normal çıktı
+# summary.json kökünde, TTA summary["tta"] altında (tohum gürültüsünden arınmış eşli karşılaştırma).
+inherit: main_ha_rf0
+name: ev_tta_rf0
+adapt:
+  booster_source: main_rf0
+  net_seed_offset: 40000
+  eval_matches: [J03WQQ, J03WOY, J03WR9]
+  segment_diagnostics: true
+  tta_swap: report

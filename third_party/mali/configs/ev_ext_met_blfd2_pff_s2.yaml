@@ -1,0 +1,5 @@
+# ev_ext_met_blfd2_pff, ikinci ag tohum seti.
+inherit: ev_ext_met_blfd2_pff
+name: ev_ext_met_blfd2_pff_s2
+adapt:
+  net_seed_offset: 50000

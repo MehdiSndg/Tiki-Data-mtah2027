@@ -1,0 +1,6 @@
+# Gün 7 (Ek Q.4): main_rf1'nin aynısı (v1 eğitim); ek hakem = v2b. ev_mix_rf1'nin tabanı.
+inherit: main_v1_rf1
+name: ev_ref2b_rf1
+dfl_referee_eval: {ball_smooth_frames: 13, ball_offset_m: 0.5, player_smooth_frames: 15, dead_carry_prob: 0.25, dead_jitter_m: 0.8, player_gap_live: 0.02, player_gap_live_s: 1.0, player_gap_dead: 0.13, player_gap_dead_s: 7.0, ghost_frac: 0.06, ghost_mean_s: 3.0, ghost_offset_m: 2.0}
+adapt:
+  metrica_eval: [1, 2, 3]

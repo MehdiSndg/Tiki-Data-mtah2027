@@ -1,0 +1,16 @@
+# 5 Kasım: v3_dr — hedeften bağımsız bozma (Rapor 10). Eğitim kopyalarının hepsi (booster + ağ, DFL + Metrica)
+# her (tohum, maç) için geniş önsel aralıklardan çekilen bozmayla üretilir (dfl_referee.DR_V3; top boşluğu
+# uzunlukları sabit iki tepeli önsel). Sağlanan maçın hiçbir istatistiği eğitime girmez. 3 çekiliş (7, 11, 13) +
+# H↔A ikizleri; ham Metrica eğitimde kalır. Hakemler ev_ext_met ile aynı: tohum 7'nin sabit v1 / v2b kopyaları
+# (yalnız puanlama). Booster'ın maskeli kopyaları da önsel oranlarla (ölü 0,45 / canlı 0,30, eski 0,58 / 0,32
+# BAR'dan geliyordu) ve sentetik boşluk uzunluklarıyla.
+inherit: ev_ext_met
+name: ev_ext_dr3
+dfl_mix_eval: false
+dfl_referee_train: {dr: v3}
+masking:
+  dead_fraction: 0.45
+  live_fraction: 0.30
+adapt:
+  booster_source: null
+  extra_draws: [11, 13]

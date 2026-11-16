@@ -1,0 +1,5 @@
+# Gün 2: + press group re-tested on main (Ek E decision).
+inherit: main_v1
+name: d2_press
+features:
+  groups: [core, tags, geo, kin, press]

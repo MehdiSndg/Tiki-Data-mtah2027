@@ -1,0 +1,8 @@
+# Uyumluluk kanıtı (25 Ekim, Ek O.5): tc'nin katkısı el etiketi olmadan, sadece DFL LOMO + Metrica ile.
+# main_rf1 ile aynı, 'tc' grubu yok; Metrica 1-3 sadece hakem (eğitime girmez).
+inherit: main_v1_rf1
+name: ev_notc_rf1
+features:
+  groups: [core, tags, geo, kin]
+adapt:
+  metrica_eval: [1, 2, 3]

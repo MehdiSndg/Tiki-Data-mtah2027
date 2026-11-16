@@ -1,0 +1,5 @@
+# 11 Kasim: ev_ext_met_bl + Metrica bozuk kopyasinda olu top DFL gibi gorunur (metrica_src.fill_dead_ball), sonra DFL ile
+# ayni durum maskesi (olu 0,58 / canli 0,32). Ham Metrica da olu top hic gorunmez: "top gorunuyor = canli" kisayolu.
+inherit: ev_ext_met_bl
+name: ev_ext_met_blf
+metrica_dead_fill: true

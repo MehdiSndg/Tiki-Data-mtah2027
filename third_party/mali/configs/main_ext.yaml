@@ -1,0 +1,12 @@
+# Kasım 2026 kural açıklaması: "If you need to train (or retrain), you MUST use only external data."
+# Resmi H↔A tarifi (main_ha) + hiçbir aşamada sağlanan maçla eğitim yok:
+#   booster yalnız DFL maçlarıyla (BAR zayıf çapa kaynağı yok), ortak öznitelik grupları (Smart Tagging
+#   grubu yalnız BAR'da olduğu için eğitilemez, çıkarıldı); ağ yalnız DFL ile, BAR ince ayarı yok.
+# BAR yalnızca tahmin edilir. Bölge katları gereksiz (BAR çapası yok).
+inherit: main_ha
+name: main_ext
+features:
+  groups: [core, geo, kin, tc]
+joint:
+  matches: [J03WPY, J03WN1, J03WMX, J03WOH]
+  external_only: true

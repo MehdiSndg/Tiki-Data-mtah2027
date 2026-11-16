@@ -1,0 +1,5 @@
+# Gün 5 region fold 0 of 4 of the submission model (run.py main trains and stitches it).
+inherit: main
+name: main_rf0
+validation:
+  region_cv: [0, 4]

@@ -1,0 +1,5 @@
+# Gün 2 öğle: aligned DFL labels + CatBoost family.
+inherit: d2_align
+name: d2_align_cat
+model:
+  family: catboost

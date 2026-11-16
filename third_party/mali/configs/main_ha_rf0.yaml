@@ -1,0 +1,5 @@
+# Region fold 0 of 4 of the H<->A candidate (tools/run_ha_production.py trains and stitches it).
+inherit: main_ha
+name: main_ha_rf0
+validation:
+  region_cv: [0, 4]

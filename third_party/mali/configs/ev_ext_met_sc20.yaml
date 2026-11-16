@@ -1,0 +1,9 @@
+# 5 Kasım gece: SkillCorner taraması 2 — 20 açık maçın hepsi, her maçtan her 2. eğitim penceresi (toplam SkillCorner
+# hacmi ~10 maç; DFL + Metrica'yı ezmesin). Katlar, hakemler ve ağ tohumları ev_ext_met ile aynı.
+inherit: ev_ext_met
+name: ev_ext_met_sc20
+adapt:
+  skillcorner_games: ["2017461", "2016236", "2015213", "2013725", "2011166", "2010085", "2007721", "2007448",
+                      "2006363", "2006229", "1996435", "1996436", "1986691", "1959846", "1953632", "1927964",
+                      "1925299", "1899585", "1886347", "1874553"]
+  skillcorner_stride: 2

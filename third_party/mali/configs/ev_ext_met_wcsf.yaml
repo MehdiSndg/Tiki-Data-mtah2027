@@ -1,0 +1,9 @@
+# 5 Kasım: WCSF 2023 Groningen maçı (SciSports, optik takip, sağlayıcının AliveFlag / PossessionFlag kanalları)
+# DFL benzeri bir maç olarak eklenir: booster görmez (unseen), ağ eğitir (v1 + v2b + H↔A), tutulduğu katta ayrı
+# bir hakem olarak puanlanır (DFL-3 ortalamasına karışmaz; tools/run_day_screen.met_scores). Kullanıcı kararı:
+# lisans belirtilmemiş, README "araştırma amaçlı, atıf rica edilir"; teknik dokümanda kaynak gösterilecek.
+inherit: ev_ext_met
+name: ev_ext_met_wcsf
+adapt:
+  extra_matches: [J03WQQ, J03WOY, J03WR9, WCSF]
+  eval_matches: [J03WQQ, J03WOY, J03WR9, WCSF, metrica_1, metrica_2, metrica_3]

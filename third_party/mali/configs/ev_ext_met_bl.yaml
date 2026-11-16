@@ -1,0 +1,5 @@
+# 11 Kasim: ev_ext_met + Metrica top-durumu etiketleri (olu top = top kanali bos >= 50 kare; io/metrica_open.ball_status_labels).
+# Olay kurali canli oyunun %9-17 sini olu sayiyor ve olu topu vurus aninda baslatiyordu (rapor 10, 11 Kasim).
+inherit: ev_ext_met
+name: ev_ext_met_bl
+metrica_labels: ball

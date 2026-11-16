@@ -1,0 +1,8 @@
+# 11 Kasim gece: ev_ext_met_blfd + aglarin egitiminde (1) her DFL macinin ek bir v2b cekilisi (tohum 11) olu topu gezdirir
+# (hakem kopyalari degismez), (2) ham Metrica pencereleri egitimden cikar (ham izde "top gorunuyor = canli" istisnasiz).
+inherit: ev_ext_met_blfd
+name: ev_ext_met_blfd2
+adapt:
+  extra_draws: [11]
+  draw_overrides: {dead_drift: 1.5, eval_copy_only: true}
+  metrica_raw_train: false

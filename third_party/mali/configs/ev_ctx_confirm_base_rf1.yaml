@@ -1,0 +1,11 @@
+# 29 Ekim: pencere 128 doğrulaması, eşli referans. H↔A omurgası, YENİ ağ tohumları 22027/23027/24027.
+inherit: main_rf1
+name: ev_ctx_confirm_base_rf1
+seqnet:
+  n_seeds: 3
+adapt:
+  booster_source: main_rf1
+  net_seed_offset: 20000
+  eval_matches: [J03WQQ, J03WOY, J03WR9]
+  segment_diagnostics: true
+  external_team_copies: swap

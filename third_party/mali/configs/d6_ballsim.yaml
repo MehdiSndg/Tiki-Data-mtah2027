@@ -1,0 +1,10 @@
+# Gün 4 (Ek M.7): main + ATD-like DFL ball (moving average 13 frames + slow 0.5 m offset).
+# The BAR ATD ball is smoother and farther from the controlling player than the DFL ball; the net
+# learns DFL's sharp touch/proximity timing that BAR does not show (H<->A offset BAR 24 vs DFL 5 frames).
+# NB: the DFL LOMO referee is degraded too, so its numbers are not comparable with main's.
+inherit: main_v1
+name: d6_ballsim
+dfl_referee:
+  ball_smooth_frames: 13
+  ball_offset_m: 0.5
+  ball_offset_frames: 25

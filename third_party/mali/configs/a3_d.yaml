@@ -1,0 +1,10 @@
+# Adım 3.1: dead-ball weak labels beyond "ball outside the pitch" (labels/weak.py).
+inherit: t1_selected
+name: a3_d
+weak_labels:
+  d_tempo: true          # player median speed < 1.2 m/s for >= 10 s, 3 s cut at both ends
+  # The tempo rule multiplies the BAR-ATH dead anchors (5.3k -> 38.8k frames, 35% -> 82% of the
+  # anchors). Without a correction the alive model's prior shifts with it ("slow = dead", the M0
+  # v2 trap). D rows of weak-label sources keep the reference anchor ratio of the weight (0.35),
+  # so only the variety of dead-ball examples changes.
+  d_weight_share: 0.35

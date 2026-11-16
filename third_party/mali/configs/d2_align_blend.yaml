@@ -1,0 +1,5 @@
+# Gün 2 öğle: aligned DFL labels + LightGBM/CatBoost blend (each seed trains both; 10 members averaged before the HSMM).
+inherit: d2_align
+name: d2_align_blend
+model:
+  families: [lgbm, catboost]

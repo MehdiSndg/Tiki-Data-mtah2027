@@ -1,0 +1,9 @@
+# 2 Kasım: simetrik çapa ince ayarı doğrulaması; yeni eşli ağ tohumları 52027..56027, resmi main_ha tarifi.
+inherit: main_ha_rf0
+name: ev_symft_confirm_sym_rf0
+adapt:
+  booster_source: main_rf0
+  net_seed_offset: 50000
+  eval_matches: [J03WQQ, J03WOY, J03WR9]
+  segment_diagnostics: true
+  bar_swap_anchors: true

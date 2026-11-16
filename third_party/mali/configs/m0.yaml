@@ -1,0 +1,46 @@
+# M0: end-to-end baseline. Parameters are plan defaults, NOT tuned on the public window.
+name: m0
+
+features:
+  groups: [core, tags]          # tags is source-specific (BAR-ATH Smart Tagging)
+
+weak_labels:
+  dead_oob_min_m: 1.0          # ball visible and this far outside the pitch -> D anchor
+  contact_radius_m: 1.0        # team K anchor: nearest K player within this ...
+  free_radius_m: 2.0           # ... and nearest opponent beyond this ...
+  contact_half_window: 7       # ... for >= contact_min_frac of a +-7 frame window
+  contact_min_frac: 0.8
+  inside_margin_m: 0.5         # team anchors only when the ball is this far inside the lines
+  live_min_ball_speed_ms: 1.0  # ... the ball is moving (a placed ball is a restart, not control)
+  live_min_p80_speed_ms: 2.0   # ... and the collective tempo is live (stoppage median ~1.6 m/s,
+                               #     live play ~2.9-3.3 m/s; midpoint, not tuned on the score)
+
+masking:                        # self-supervised ball masking so the model learns gaps
+  copies: 2
+  target_fraction: 0.4
+
+lgbm:
+  learning_rate: 0.05
+  n_estimators: 400
+  num_leaves: 24
+  max_depth: 6
+  min_child_samples: 200
+  subsample: 0.7
+  subsample_freq: 1
+  colsample_bytree: 0.6
+  reg_alpha: 2.0
+  reg_lambda: 5.0
+  row_stride: 2                 # use every 2nd anchor frame (frames are highly autocorrelated)
+
+decoder:
+  stride: 5
+  prob_floor: 1.0e-4
+  emission_weights: [1.0, 1.0, 1.15]   # H, A, D
+  alpha_duration: 4.0
+  duration:                     # log-normal priors in frames; hard minimum; plateau beyond
+    possession: {median: 250, sigma: 0.85, min: 12, max: 5000, plateau: 1500}
+    dead:       {median: 350, sigma: 0.70, min: 60, max: 6000, plateau: 2500}
+  penalty_turnover: 14.0
+  penalty_stoppage: 10.0
+  penalty_restart: 6.0
+  refine_frames: 10

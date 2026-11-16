@@ -1,0 +1,7 @@
+# 5 Kasım: SkillCorner yalnız ölü / canlı. ev_ext_met_sc'nin 8 maçı, ama SkillCorner pencerelerinde takım kaybı
+# yok (skillcorner_team 0: yalnız D'ye karşı canlı kaybı; sınır kaybı kapalı; H↔A ikizleri atılır). Oyun evresi
+# takım etiketi kaba (kısa dokunuş yok) ve 4–5 Kasım taramalarında Metrica'yı düşürdü; ölü top etiketi güvenilir.
+inherit: ev_ext_met_sc
+name: ev_ext_met_scd
+adapt:
+  skillcorner_team: 0.0

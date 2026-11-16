@@ -1,0 +1,5 @@
+# 6 Kasım: ev_ext_met_big, ikinci ağ tohum seti (ev_ext_met_s2 ile aynı ofset). Büyük ağ kararı iki setle verilir.
+inherit: ev_ext_met_big
+name: ev_ext_met_big_s2
+adapt:
+  net_seed_offset: 50000

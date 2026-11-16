@@ -1,0 +1,5 @@
+# Confirm the small rf0 known-support signal without combining other changes.
+inherit: ev_evening_base_rf1
+name: ev_evening_known_rf1
+seqnet:
+  tmse_weak_support: known

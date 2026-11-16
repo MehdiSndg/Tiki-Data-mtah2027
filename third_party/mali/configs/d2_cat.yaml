@@ -1,0 +1,5 @@
+# Gün 2 öğle: second model family (CatBoost) on main's features, labels, weights and seeds.
+inherit: main_v1
+name: d2_cat
+model:
+  family: catboost

@@ -1,0 +1,11 @@
+# Shared paired reference: a different region and fresh network seeds 4027/5027.
+inherit: main_rf1
+name: ev_evening_base_rf1
+seqnet:
+  n_seeds: 2
+adapt:
+  booster_source: main_rf1
+  net_seed_offset: 2000
+  eval_matches: [J03WQQ, J03WOY, J03WR9]
+  segment_diagnostics: true
+  external_team_copies: swap

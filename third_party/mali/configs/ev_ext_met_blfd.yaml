@@ -1,0 +1,5 @@
+# 11 Kasim: ev_ext_met_blf + olu top gezdirilir: BAR in saha disi (fiziksel olu) gorunur top hiz dagilimi x 1,5 (etiketsiz;
+# benzetimde olu top medyani 1,3 m/s, BAR da 2,7 m/s). metrica_src.drift_dead_ball.
+inherit: ev_ext_met_blf
+name: ev_ext_met_blfd
+metrica_dead_drift: 1.5

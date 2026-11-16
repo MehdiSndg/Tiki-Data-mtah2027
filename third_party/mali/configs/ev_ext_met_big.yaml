@@ -1,0 +1,8 @@
+# 5 Kasım: büyük ağ (takım arkadaşının BigGRU bulgusu: 256 gizli / 3 katman iki hakemde de hafif olumlu).
+# ev_ext_met ile aynı veri ve tohumlar; TCN 128 -> 192, BiGRU 96 x 2 -> 192 x 3.
+inherit: ev_ext_met
+name: ev_ext_met_big
+seqnet:
+  hidden: 192
+  gru_hidden: 192
+  gru_layers: 3

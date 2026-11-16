@@ -1,0 +1,10 @@
+# Paired H/A-augmented backbone, exact effective recipe of ev_ha_swap_rf0.
+inherit: main_rf0
+name: ev_bmask_base_rf0
+seqnet:
+  n_seeds: 2
+adapt:
+  booster_source: main_rf0
+  eval_matches: [J03WQQ, J03WOY, J03WR9]
+  segment_diagnostics: true
+  external_team_copies: swap

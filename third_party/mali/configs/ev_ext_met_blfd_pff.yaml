@@ -1,0 +1,8 @@
+# 11 Kasim: ev_ext_met_blf + 16 PFF FC Dunya Kupasi 2022 maci (grup maclari, sirali listenin her 3.su) EGITIMDE; hakem degil.
+# Yayin takibi; olu top doldurulup 0,58 gizlenir (skillcorner_src._pff); etiket = oyun olaylari, kisa donusler bastirilmis.
+# skillcorner_stride 2: PFF pencerelerinin yarisi (egitim suresi).
+inherit: ev_ext_met_blfd
+name: ev_ext_met_blfd_pff
+adapt:
+  skillcorner_games: ["pff_3812", "pff_3815", "pff_3818", "pff_3821", "pff_3824", "pff_3827", "pff_3830", "pff_3833", "pff_3836", "pff_3839", "pff_3842", "pff_3845", "pff_3848", "pff_3851", "pff_3854", "pff_3857"]
+  skillcorner_stride: 2

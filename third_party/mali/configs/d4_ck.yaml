@@ -1,0 +1,5 @@
+# Gün 4 (rapor 5 Sıra 1, Ek M): main + ball-free collective kinematics ('ck', source-common).
+inherit: main_v1
+name: d4_ck
+features:
+  groups: [core, tags, geo, kin, ck]

@@ -1,0 +1,5 @@
+# Gün 2: + phys group (aerial bypass veto, goalkeeper holding live vs goal kick).
+inherit: main_v1
+name: d2_phys
+features:
+  groups: [core, tags, geo, kin, phys]

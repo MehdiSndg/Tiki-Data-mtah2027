@@ -1,0 +1,5 @@
+# Gün 2 / Adım 4d: DFL frozen dead ball jittered (0.2 m, ATD-like 2 m/s median) in joint training + referee.
+inherit: main_v1
+name: d2_jitter
+dfl_referee:
+  dead_jitter_m: 0.2

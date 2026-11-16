@@ -1,0 +1,5 @@
+# Less adaptation to sparse BAR anchors; external pretraining remains unchanged.
+inherit: ev_evening_base_rf1
+name: ev_evening_ft4_rf1
+adapt:
+  ft_epochs: 4

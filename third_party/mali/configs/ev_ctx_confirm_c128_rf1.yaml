@@ -1,0 +1,7 @@
+# 29 Ekim: pencere 128 doğrulaması (ev_evening_context128 ile aynı tek fark), eşli tohumlar.
+inherit: ev_ctx_confirm_base_rf1
+name: ev_ctx_confirm_c128_rf1
+seqnet:
+  chunk: 128
+  chunk_step: 64
+  batch: 64

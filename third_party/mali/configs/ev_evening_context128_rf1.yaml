@@ -1,0 +1,8 @@
+# 25.6 s instead of 102.4 s context, retaining half overlap and 8192 steps/batch.
+# Window ends and known-label filtering mean optimizer counts need not be identical.
+inherit: ev_evening_base_rf1
+name: ev_evening_context128_rf1
+seqnet:
+  chunk: 128
+  chunk_step: 64
+  batch: 64

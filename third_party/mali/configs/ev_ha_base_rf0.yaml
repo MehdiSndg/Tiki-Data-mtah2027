@@ -1,0 +1,3 @@
+# Fresh paired baseline on the mixed official backbone; short-team loss remains disabled.
+inherit: ev_short_main_base_rf0
+name: ev_ha_base_rf0

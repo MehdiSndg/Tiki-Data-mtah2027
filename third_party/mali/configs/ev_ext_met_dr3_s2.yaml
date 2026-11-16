@@ -1,0 +1,6 @@
+# 6 Kasım: ev_ext_met_dr3 (3 bozma çekilişi) ikinci ağ tohum setiyle (52027..56027): Metrica'lı booster'la 4 kapıyı
+# geçen adayın aynı makinede tohum tekrarı; referansı ev_ext_met_s2.
+inherit: ev_ext_met_dr3
+name: ev_ext_met_dr3_s2
+adapt:
+  net_seed_offset: 50000

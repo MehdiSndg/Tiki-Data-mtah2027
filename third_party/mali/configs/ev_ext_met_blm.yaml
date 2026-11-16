@@ -1,0 +1,6 @@
+# 11 Kasim: ev_ext_met_bl + Metrica bozuk kopyasinda canli top BAR gibi maskelenir (canli karelerin 0,32 si; base.yaml
+# masking.live_fraction ile ayni). Ham Metrica da top canlida %97-100 gorunur, oluyken hic: "top gizli = olu" kisayolu.
+inherit: ev_ext_met_bl
+name: ev_ext_met_blm
+adapt:
+  metrica_ball_mask: 0.32

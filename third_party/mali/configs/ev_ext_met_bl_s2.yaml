@@ -1,0 +1,4 @@
+# 11 Kasim: ev_ext_met_bl, ikinci ag tohum seti.
+inherit: ev_ext_met_s2
+name: ev_ext_met_bl_s2
+metrica_labels: ball

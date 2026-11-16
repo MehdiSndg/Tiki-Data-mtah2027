@@ -1,0 +1,6 @@
+# Gün 3 (Ek L.14): main + source-specific camera features (homography aim point, pan speed).
+# Only the booster sees them (BAR-ATH rows; NaN on DFL rows); the net keeps the common schema.
+inherit: main_v1
+name: d3_cam
+features:
+  groups: [core, tags, geo, kin, cam]

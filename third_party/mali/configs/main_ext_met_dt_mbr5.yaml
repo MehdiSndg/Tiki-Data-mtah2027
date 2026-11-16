@@ -1,0 +1,8 @@
+# 11 Kasim: main_ext_met_dt + Bayes karari (decoding/mbr.py): ornek akislardan beklenen spellF1 secimi, sicaklik 5.
+inherit: main_ext_met_dt
+name: main_ext_met_dt_mbr5
+decoder:
+  mbr:
+    samples: 300
+    temperature: 5
+    seed: 2027

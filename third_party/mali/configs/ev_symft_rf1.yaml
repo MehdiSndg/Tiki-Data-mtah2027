@@ -1,0 +1,10 @@
+# 1 Kasım: BAR zayıf çapalarında simetrik ince ayar (Rapor 9 Sıra 1b). Referans = ev_tta_rf1'in normal çıktısı
+# (aynı 5 ağ tohumu 42027..46027, resmi main_ha tarifi). Tek fark: BAR çapaları takaslı ikizleriyle de eğitilir.
+inherit: main_ha_rf1
+name: ev_symft_rf1
+adapt:
+  booster_source: main_rf1
+  net_seed_offset: 40000
+  eval_matches: [J03WQQ, J03WOY, J03WR9]
+  segment_diagnostics: true
+  bar_swap_anchors: true

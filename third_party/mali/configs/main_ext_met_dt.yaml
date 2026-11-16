@@ -1,0 +1,16 @@
+# 4 Kasım (kullanıcı onayı): resmi uyumlu tarif. main_ext_met olasılıkları (BAR'la hiç eğitim yok) + decoder'ın
+# yalnız dış veride ayarlanmış değerleri (tools/tune_decoder_ext.py: ayar 4 çekirdek DFL, doğrulama 3 görülmemiş
+# DFL + Metrica LOMO; bileşik +0,0033). Üretim:
+#   run.py m0 --config main_ext_met ; run.py adapt --config main_ext_met --name main_ext_met
+#   tools/decode_tuned.py --run main_ext_met --config main_ext_met_dt --out main_ext_met_dt
+inherit: main_ext_met
+name: main_ext_met_dt
+adapt:
+  decoder:
+    emission_scale: 2.5
+decoder:
+  penalty_turnover: 8.0
+  duration:
+    possession:
+      median: 150
+      sigma: 0.6

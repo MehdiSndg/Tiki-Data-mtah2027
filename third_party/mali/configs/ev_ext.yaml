@@ -1,0 +1,8 @@
+# Kasım 2026: yalnız dış veriyle eğitilen tarif (main_ext) taraması; ağ tohumları ev_tta_rf{0,1} ile aynı
+# (42027..46027), böylece resmi tarifin normal çıktısıyla aynı tohumlarda kıyaslanır.
+inherit: main_ext
+name: ev_ext
+adapt:
+  net_seed_offset: 40000
+  eval_matches: [J03WQQ, J03WOY, J03WR9]
+  segment_diagnostics: true

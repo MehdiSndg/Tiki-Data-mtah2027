@@ -1,0 +1,10 @@
+# Adım 2 selection, set by the USER on 22 Oct 2026 (MASTER_PLAN Ek E/F): +geo accepted
+# (5-seed ensemble: spellF1 0.5125 -> 0.5806, macroF1 0.809 -> 0.827, all 5 seeds better,
+# rejected only by the then too-narrow bands). kin and press are kept in the code and are
+# re-tested after the Adım 3 label work. NOTE: run.py ablate overwrites this file.
+inherit: m0
+name: t1_selected
+features:
+  groups: [core, tags, geo]
+lgbm:
+  n_seeds: 5

@@ -1,0 +1,7 @@
+# Candidate (not official): official mixed v1+v2b recipe + H<->A team-swap symmetry copies.
+# Evidence: handoff 2026-10-29 section 3 (5 fresh seeds x 2 regions: +0.013 / +0.017 / +0.014).
+# Produced by tools/run_ha_production.py -> outputs/main_ha; promotion only on user approval.
+inherit: main
+name: main_ha
+adapt:
+  external_team_copies: swap

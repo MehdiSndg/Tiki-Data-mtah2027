@@ -1,0 +1,8 @@
+# 6 Kasım: ev_ext_met (aynı ağ tohumları) + Metrica'lı booster hem harmanda hem AĞ GİRDİSİNDE (ev_ext_mb).
+# Kıyas: ev_ext_met (aynı tohum seti) ve onun yalnız harman takası (outputs/booster_met_ev_ext_met.json).
+inherit: ev_ext_met
+name: ev_ext_met_mb
+joint:
+  metrica_booster: [1, 2, 3]
+adapt:
+  booster_source: ev_ext_mb

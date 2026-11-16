@@ -1,0 +1,5 @@
+# 12 Kasim: ev_ext_met_blfd2 + Metrica nin BAR a benzer egitim pencereleri 2 kat (hedefle ayni saglayici ve sahiplik kurali).
+inherit: ev_ext_met_blfd2
+name: ev_ext_met_blfd2_m2
+adapt:
+  metrica_repeat: 2

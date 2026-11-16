@@ -1,0 +1,6 @@
+# Only difference: no T-MSE on true known H<->A edges of dense external windows.
+# Preserve lambda_tmse=0.3, all other losses, normalization and the full decoder.
+inherit: ev_bmask_base_rf0
+name: ev_bmask_team0_rf0
+seqnet:
+  tmse_team_boundary_radius: 0

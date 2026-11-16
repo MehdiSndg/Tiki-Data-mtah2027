@@ -1,0 +1,5 @@
+# Same total gate weight as scale, concentrated on pairs with two known weak targets.
+inherit: ev_support_base_rf0
+name: ev_support_known_rf0
+seqnet:
+  tmse_weak_support: known

@@ -1,0 +1,10 @@
+# Paired screening reference: 2 net seeds; three booster-unseen DFL folds + untouched Metrica.
+# Reuse only the identically configured, already-finished mixed-corruption booster caches.
+inherit: ev_mix_rf0
+name: ev_short_base_rf0
+seqnet:
+  n_seeds: 2
+adapt:
+  booster_source: ev_mix_rf0
+  eval_matches: [J03WQQ, J03WOY, J03WR9]
+  segment_diagnostics: true

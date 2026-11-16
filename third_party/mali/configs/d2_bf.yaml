@@ -1,0 +1,5 @@
+# Gün 2: tactical ball gaps filled from the aligned broadcast ATD (+10.3% of missing graded frames).
+inherit: main_v1
+name: d2_bf
+data:
+  broadcast_fill: true

@@ -1,0 +1,5 @@
+# Compute control: repeat each external v1/v2b sequence without changing teams.
+inherit: ev_ha_base_rf0
+name: ev_ha_repeat_rf0
+adapt:
+  external_team_copies: repeat

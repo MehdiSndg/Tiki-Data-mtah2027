@@ -1,0 +1,62 @@
+[project]
+name = "mtah2027-possession"
+version = "0.1.0"
+description = "Frame-level ball possession for More than a Hack 2027, Phase 1"
+readme = "README.md"
+# 3.11 is one of the two versions the official scorer is tested under (README.md, Requirements).
+requires-python = "==3.11.*"
+dependencies = [
+    # scorer + baseline (evaluation/, starter/baseline.py)
+    "numpy>=2.1,<2.4",
+    "pandas>=2.2,<3",        # floodlight requires pandas < 3
+    "scipy>=1.14,<2",
+    # data loading: ATD/Smart Tagging (kloppy, pinned as in requirements-starter.txt) and the
+    # Sportec Open DFL dataset (floodlight)
+    "kloppy==3.18.0",
+    "floodlight==1.2.0",
+    "lxml>=5.3,<6",          # floodlight requires lxml < 6
+    # video and audio decoding; 18.1 is the last PyAV release with cp311 wheels. Full (not
+    # headless) OpenCV because ultralytics and sahi require it; installing both breaks cv2.
+    "opencv-python==4.14.0.94",
+    "av==18.1.0",
+    "imageio-ffmpeg==0.6.0",   # a static ffmpeg binary, for writing review clips without sudo
+    # object detection: pretrained YOLO (COCO "sports ball", "person") for the video checks, and
+    # sliced inference for a ball that is a few pixels wide. ultralytics is AGPL-3.0.
+    "ultralytics==8.4.174",
+    "sahi==0.12.8",
+    # models
+    "torch==2.7.1",
+    "torchvision==0.22.1",
+    # analysis: classical models and fast caching of derived arrays
+    "scikit-learn==1.9.1",
+    "pyarrow==25.0.1",
+    "tqdm>=4.66,<5",
+    # notebooks and plots
+    "matplotlib>=3.9,<4",
+    "mplsoccer==1.8.1",
+    "ipywidgets>=8,<9",
+    "notebook>=7,<8",
+    "ipykernel>=6,<8",
+]
+
+[dependency-groups]
+dev = ["pytest>=8,<9"]
+
+# torch/torchvision come from the CUDA 12.8 wheel index: 12.8 is the first that runs on Blackwell
+# (Colab G4, RTX PRO 6000), and the same build runs on our RTX 4060 and on A100
+# (notes/video/P5_gpu_bench.md). Everything else from PyPI; `explicit` keeps the PyTorch index from
+# shadowing PyPI for other packages.
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+torchvision = { index = "pytorch-cu128" }
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]          # data/external holds cloned third-party repositories (PathCRF, WASB)

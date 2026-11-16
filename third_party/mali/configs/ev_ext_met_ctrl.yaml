@@ -1,0 +1,10 @@
+# 10 Kasım: ev_ext_met ile aynı tarif ve ağ tohumları; DFL ağ hedefi gt20 yerine kontrollü sahiplik (ctrl:
+# labels.align.controlled_possession, parametreleri Metrica olay istatistiklerine kalibre). Gerekçe: resmi tanım
+# (CHALLENGE.md) değişimi "kontrollü sahiplik" şartına bağlıyor. Hakemler değişmez (DFL gt35, Metrica olayları).
+inherit: ev_ext_met
+name: ev_ext_met_ctrl
+adapt:
+  dfl_target: ctrl
+  # min_frames varsayılanı 19 public pencereden türemişti (uyumsuz). 21 = "<= 20 karelik dönüş koşulsuz birleşir":
+  # dış hakemlerde seçilmiş gt20 hizalamasıyla aynı sınır.
+  ctrl: {max_frames: 100, min_frames: 21, before_dead: false, dribble_frames: 25}

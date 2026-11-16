@@ -1,0 +1,5 @@
+# 6 Kasım: ev_ext_met_mb'nin ikinci ağ tohum seti (52027..56027); kıyas ev_ext_met_s2 (aynı tohumlar, eski booster).
+inherit: ev_ext_met_mb
+name: ev_ext_met_mb_s2
+adapt:
+  net_seed_offset: 50000

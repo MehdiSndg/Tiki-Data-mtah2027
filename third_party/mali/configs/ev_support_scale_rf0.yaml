@@ -1,0 +1,5 @@
+# Strength control: every weak-window edge has its known-pair fraction as coefficient.
+inherit: ev_support_base_rf0
+name: ev_support_scale_rf0
+seqnet:
+  tmse_weak_support: scale

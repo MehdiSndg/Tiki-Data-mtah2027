@@ -1,0 +1,5 @@
+# Same number/order/length of examples as repeat; only the extra copies exchange H/A.
+inherit: ev_ha_base_rf0
+name: ev_ha_swap_rf0
+adapt:
+  external_team_copies: swap
