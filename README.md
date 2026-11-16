@@ -48,6 +48,10 @@ as assets of this repository's GitHub release `v30` and go into `models/` (and `
 teammate's nets). The release lists each file with its sha256 and the command that trained it. The dead-ball
 classifier (HistGradientBoosting, fixed seed) is refitted during the build.
 
+```bash
+bash scripts/fetch_weights.sh <owner/repo>     # downloads the release, checks SHA256SUMS, fills models/ and third_party/mali/outputs/
+```
+
 ## Reproduction
 
 ```bash

@@ -20,7 +20,8 @@ PY=.venv/bin/python
 #   models/*_ea44a36fa4aceb67.pt, models/dead_gru_d012_m123x_d728296f74d7bcff.pt
 #                                           [WEIGHTS] ours: team / boundary / dead-ball nets trained on degraded DFL + Metrica
 #                                           (mtah.grumodel.external_gru, analysis/p4_common.dead_gru; built by scripts/kaggle/)
-#   members/mali: outputs/main_ext_met/nets/ + summary.json   [WEIGHTS] Mehmet Ali Topkara's nets (to be released)
+#   third_party/mali/outputs/                [WEIGHTS] Mehmet Ali Topkara's run (nets + summary.json) and its outputs for our match
+#   All [WEIGHTS] files: bash scripts/fetch_weights.sh <owner/repo>   (this repository's release v30, sha256 checked)
 
 # 1. Caches of the provided match (no model, no label): tracking table, frame table, broadcast -> tactical frame map
 $PY -c "import sys; sys.path[:0]=['.','evaluation']; from mtah.data import load_tactical; from mtah.frames import load_frames; load_tactical(); load_frames()"
@@ -37,13 +38,13 @@ done
 $PY analysis/p9dn_barath_dense_avg.py A B F A3 F2                  # -> cache/barath_dense_avg5.npz (v26, v27a)
 $PY analysis/p9dn_barath_dense_avg.py A B F A3 F2 F3 F4            # -> cache/barath_dense_avg7.npz (v28, v29)
 
-# 3. Mali's member: his pipeline in its own environment (members/mali, kurulum/requirements-gpu.txt)
+# 3. Mali's member: his pipeline in its own environment (third_party/mali, kurulum/requirements-gpu.txt)
 #   python run.py m0 --config main_ext_met && python run.py m0 --config ev_ext_mb
 #   python tools/bar_from_nets.py --run main_ext_met               # -> probabilities for our match
 #   python tools/team_export.py --out <dir>                        # -> barath/components.npz (p_home_given_alive, p_dead, p_boundary)
 #   v26-v28 read his delivered cache/team_in/mehmet_ali_topkara/barath/components.npz. v29 reads the same recipe rebuilt by us
 #   (his code, nets trained on Colab with MTAH_NO_PUBLIC=1, booster rebuilt here):
-#   MTAH_DATA_DIR=data MTAH_NO_PUBLIC=1 <his venv>/python scripts/mali_components.py <his code dir> cache/team_in/mehmet_ali_topkara/barath_rebuilt
+#   MTAH_DATA_DIR=data MTAH_NO_PUBLIC=1 <his venv>/python scripts/mali_components.py third_party/mali cache/team_in/mehmet_ali_topkara/barath_rebuilt
 
 # 4. Our chain's models are loaded from models/ (cache key ea44a36fa4aceb67 = the sources in mtah.grumodel.HASH_FILES);
 #    the dead-ball classifier (HistGradientBoosting, fixed seed) is refitted inside step 5 from data/external; v27a-v29
