@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Download the trained weights the submission (v30) was built with from this repository's GitHub release and check
+# Download the trained weights the submission (v38) was built with from this repository's GitHub release and check
 # them against SHA256SUMS. Our nets go to models/, the teammate's run outputs to third_party/mali/outputs/.
 #   bash scripts/fetch_weights.sh <owner/repo> [tag]
 set -euo pipefail
 cd "$(dirname "$0")/.."
-REPO=${1:?owner/repo}; TAG=${2:-v30}
+REPO=${1:?owner/repo}; TAG=${2:-v38}
 URL=https://github.com/$REPO/releases/download/$TAG
 TMP=$(mktemp -d)
 for a in SHA256SUMS models_team.tar models_video.tar mali_outputs.tar; do

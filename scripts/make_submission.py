@@ -106,6 +106,13 @@ V19_DRAWS = {("tcn128", False): 3}      # P9bg: the single-head wide TCN on thre
 
 def main(version="v26", out=None):
     out = out or OUT.format(version)
+    st_extra = version in ("v32", "v34", "v36", "v37", "v38")  # v32: v30 + the SoccerTrack-trained tcn128 member as a seventh member (P9fg)
+    st_arches = ("tcn128", "big", "set") if version in ("v37", "v38") else ("tcn128",)   # v37: v33 + P9fg's three SoccerTrack members
+    pff_set = version in ("v38", "v39")           # v38: v37 + P9fo's PFF-trained set member; v39: v33 + that member only
+    pff_extra = version in ("v35", "v36")         # v35: v33 + the PFF-trained tcn128 member (P9fo); v36: v34 + that member
+    video_dead_half = version in ("v33", "v34", "v35", "v36", "v37", "v38", "v39")   # v33: v30 with the video's dead-ball probability at weight 1/2 (P9fh) and D's emission weight 1.0 (P9fi); v34: v32 + v33
+    if st_extra or video_dead_half or pff_extra or pff_set:
+        version = "v30"
     mix = version in ("v27", "v27a", "v28", "v29", "v30", "v31")     # v27a: the dead-ball classifier on mix copies (P9dw); v27: also the GRU (P9dx)
     mix_gru = version == "v27"
     dense = "barath_dense_avg7.npz" if version in ("v28", "v29", "v30", "v31") else "barath_dense_avg5.npz"   # v28: the seven video models' mean
@@ -154,7 +161,29 @@ def main(version="v26", out=None):
                 else:
                     member = lambda a, mt: external_gru(swap=True, metrica=True, short_k=2.0, arch=a, pretrain=pre, multitask=mt, mixed=version == "v15", seeds=seeds,
                                                         tail=tails(a, mt), draws=draws(a, mt))
+                if st_extra:
+                    from mtah.members_c import ST_LABELLED
+                    st_member = []
+                    for a_ in st_arches:
+                        st_path = cache_path("team", a_, False, tuple(range(6)), 1, st=ST_LABELLED)
+                        assert os.path.exists(st_path), "the P9fg member is trained on Colab, not here: missing " + os.path.basename(st_path)
+                        st_member.append(predict(external_gru_c(arch=a_, multitask=False, seeds=tuple(range(6)), draws=1, st=ST_LABELLED), m))
+                else:
+                    st_member = []
+                if pff_set:
+                    from mtah.pff import pff_ids
+                    pff_g = tuple(pff_ids()[12:22])
+                    pff_path = cache_path("team", "set", False, tuple(range(6)), 1, pff=pff_g)
+                    assert os.path.exists(pff_path), "the P9fo set member is trained on Colab, not here: missing " + os.path.basename(pff_path)
+                    st_member.append(predict(external_gru_c(arch="set", multitask=False, seeds=tuple(range(6)), draws=1, pff=pff_g), m))
+                if pff_extra:
+                    from mtah.pff import pff_ids
+                    pff_g = tuple(pff_ids()[12:22])
+                    pff_path = cache_path("team", "tcn128", False, tuple(range(6)), 1, pff=pff_g)
+                    assert os.path.exists(pff_path), "the P9fo member is trained locally, not here: missing " + os.path.basename(pff_path)
+                    st_member.append(predict(external_gru_c(arch="tcn128", multitask=False, seeds=tuple(range(6)), draws=1, pff=pff_g), m))
                 p = np.mean([np.mean([predict(e, m) for e in member(a, mt)], axis=0) if members_c else predict(member(a, mt), m) for a in arches for mt in heads]
+                            + st_member
                             + ([predict(external_gru(swap=True, metrica=True, short_k=2.0, arch=a, multitask=mt, seeds=seeds, draws=d), m)
                                 for (a, mt), d in V18_DRAWS.items()] if version == "v18b" else []), axis=0)
             else:
@@ -201,7 +230,14 @@ def main(version="v26", out=None):
             pdead = (dp + dq + dv) / 3
             if tag == "v26":
                 pdead = np.where(mali["valid"], (dp + dq + dv + mali["p_dead"].astype(np.float64)) / 4, pdead)
-            codes = np.where(g, semimarkov.decode_halves(p, pdead, g, b, forced_dead=rule), pm.X).astype(np.int8)
+            if video_dead_half:                       # P9fh: the video at 1/2, the tracking-based models share the other half
+                pdead = 0.5 * dv + 0.5 * np.where(mali["valid"], (dp + dq + mali["p_dead"].astype(np.float64)) / 3, (dp + dq) / 2)
+            cfg = semimarkov.CONFIG
+            if video_dead_half:                       # P9fi: D's emission weight 1.0 instead of 1.15 with the P9fh dead ball
+                import copy
+                cfg = copy.deepcopy(cfg)
+                cfg["decoder"]["emission_weights"][2] = 1.0
+            codes = np.where(g, semimarkov.decode_halves(p, pdead, g, b, forced_dead=rule, cfg=cfg), pm.X).astype(np.int8)
             if os.environ.get("MTAH_DUMP_HSMM"):     # the semi-Markov decoder's inputs, for GT-free variant studies on our match
                 np.savez_compressed(os.environ["MTAH_DUMP_HSMM"], p=p, pdead=pdead, b=b, rule=rule, g=g, dp=dp, dq=dq, dv=dv, codes=codes)
         if os.environ.get("MTAH_DUMP"):              # the chain's inputs, for GT-free decode studies on our match

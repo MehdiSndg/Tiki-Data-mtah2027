@@ -39,11 +39,19 @@ def st_tag(st):
     return "_st" + hashlib.md5(",".join(sorted(st)).encode()).hexdigest()[:6] if st else ""
 
 
-def training_matches_c(draws=1, exclude=None, smooth=None, st=()):
+def pff_tag(pff):
+    """Model-file tag for the PFF World Cup matches added to the training copies (P9fo): '' for none."""
+    import hashlib
+    return "_pff" + hashlib.md5(",".join(map(str, sorted(pff))).encode()).hexdigest()[:6] if pff else ""
+
+
+def training_matches_c(draws=1, exclude=None, smooth=None, st=(), pff=()):
     """Recipe C's training copies of the 7 DFL + 3 Metrica matches (exclude: a match name left out, for held-out folds;
     smooth: the ball smoothing in frames, default mtah.teammodel.SMOOTH; recipe D = 13, the ATD-like value, P9es;
     st: SoccerTrack v2 match ids added with their ball-status labels merged at 1.6 s, degraded with their own rates,
-    P9fg: the labelled set whose possession statistics are closest to the organisers' public window)."""
+    P9fg: the labelled set whose possession statistics are closest to the organisers' public window;
+    pff: PFF World Cup game ids, ball where PFF gives one (seen or estimated, which fills its short broadcast dropouts),
+    labels merged at 1.6 s, one degraded copy each with no extra ball losses (broadcast already loses it), P9fo)."""
     from mtah.deadsim import realistic_dead
     from mtah.degrade import degrade, rates_for
     from mtah.external import DFL, from_dfl, from_metrica_sample
@@ -61,20 +69,24 @@ def training_matches_c(draws=1, exclude=None, smooth=None, st=()):
             continue
         out += [degrade(r, dict(rates_for(k), smooth_frames=smooth), seed=d) for d in range(draws)]
         out.append(realistic_dead(degrade(r, dict(rates_for(k), smooth_frames=smooth), seed=REAL_SEED), r, seed=1000 + REAL_SEED))
+    if pff:
+        from mtah.pff import from_pff
+        for gid in pff:
+            out.append(degrade(from_pff(gid, merge_s=1.6, ball="all"), dict(rates_for("pff"), loss_per_min=0.0, smooth_frames=smooth), seed=0))
     return out
 
 
-def cache_path(target, arch, multitask, seeds, draws, short_k=2.0, exclude=None, smooth=None, st=()):
+def cache_path(target, arch, multitask, seeds, draws, short_k=2.0, exclude=None, smooth=None, st=(), pff=()):
     """models/<target>_gruC<recipe tag>_<hash of the model sources, the realism sources and the recipe seeds>.pt"""
     from mtah.teammodel import SMOOTH
     tag = G.model_tag(True, True, short_k, arch, None, multitask, False, tuple(seeds), False, draws) + ("_ex" + exclude if exclude else "")
     tag += "" if smooth is None or smooth == SMOOTH else "_b{}".format(smooth)
-    tag += st_tag(st)
+    tag += st_tag(st) + pff_tag(pff)
     return os.path.join(ROOT, "models", "{}_gruC{}_{}.pt".format(target, tag, G._hash(recipe_key())))
 
 
 def external_gru_c(dev=None, target="team", arch="gru", multitask=False, seeds=G.SEEDS, draws=1, short_k=2.0, exclude=None, cache=True, smooth=None,
-                   st=()):
+                   st=(), pff=()):
     """external_gru(swap=True, metrica=True, short_k=2.0, arch, multitask, seeds, draws) on recipe C's copies."""
     import torch
     import possession_metrics as pm
@@ -82,7 +94,7 @@ def external_gru_c(dev=None, target="team", arch="gru", multitask=False, seeds=G
     dev = dev or ("cuda" if torch.cuda.is_available() else "cpu")
     make = (lambda nf: G.widen(G.NETS[arch], nf)) if multitask else G.NETS[arch]
     heads = 2 if multitask else 1
-    path = cache_path(target, arch, multitask, seeds, draws, short_k, exclude, smooth, st)
+    path = cache_path(target, arch, multitask, seeds, draws, short_k, exclude, smooth, st, pff)
     if cache and os.path.exists(path):
         st = torch.load(path, map_location=dev, weights_only=False)
         nets = []
@@ -91,7 +103,7 @@ def external_gru_c(dev=None, target="team", arch="gru", multitask=False, seeds=G
             n.load_state_dict(sd_)
             nets.append(n.eval())
         return G.GRUEnsemble(nets, st["mu"], st["sd"], dev, arch, heads)
-    ms = training_matches_c(draws, exclude, smooth, st)
+    ms = training_matches_c(draws, exclude, smooth, st, pff)
     ms = ms + [swap_teams(m) for m in ms]
     y1 = (lambda m: (m["labels"] == pm.H).astype(np.float32)) if target == "team" else (lambda m: G.boundary_target(m["labels"]))
     alive = lambda m: np.isin(m["labels"], (pm.H, pm.A)).astype(np.float32)

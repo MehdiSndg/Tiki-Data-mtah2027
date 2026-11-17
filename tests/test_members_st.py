@@ -17,3 +17,11 @@ def test_st_tag_order_free_and_distinct():
     assert st_tag(a) != st_tag(b) != st_tag(ST_LABELLED)
     assert st_tag(()) == ""
     assert cache_path("team", "big", False, range(6), 1, st=a) != cache_path("team", "big", False, range(6), 1)
+
+
+def test_pff_tag_distinct_and_default_unchanged():
+    from mtah.members_c import pff_tag
+    assert pff_tag(()) == ""
+    a = cache_path("team", "tcn128", False, range(6), 1, pff=(3812, 3814))
+    assert a != cache_path("team", "tcn128", False, range(6), 1) and "_pff" in a
+    assert os.path.basename(cache_path("team", "big", False, tuple(range(6)), 1)) == "team_gruC_swap_met_k2_big_s012345_340546b95641c360.pt"

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# From the provided data bundle to the submission file (v30), step by step. Status on 14 Nov: steps 5-6 are verified
+# From the provided data bundle to the submission file (v38), step by step. Status on 14 Nov: steps 5-6 are verified
 # byte for byte on this machine (v28 rebuilt after the 14 Nov refactor: cmp identical); steps 1-4 list what produces each
 # input and are NOT yet re-run from an empty checkout. Lines marked [WEIGHTS] need a released weight file, because training is not
 # bit-reproducible across machines; the training command that produced it is given beside it.
@@ -21,7 +21,7 @@ PY=.venv/bin/python
 #                                           [WEIGHTS] ours: team / boundary / dead-ball nets trained on degraded DFL + Metrica
 #                                           (mtah.grumodel.external_gru, analysis/p4_common.dead_gru; built by scripts/kaggle/)
 #   third_party/mali/outputs/                [WEIGHTS] Mehmet Ali Topkara's run (nets + summary.json) and its outputs for our match
-#   All [WEIGHTS] files: bash scripts/fetch_weights.sh <owner/repo>   (this repository's release v30, sha256 checked)
+#   All [WEIGHTS] files: bash scripts/fetch_weights.sh <owner/repo>   (this repository's release v38, sha256 checked)
 
 # 1. Caches of the provided match (no model, no label): tracking table, frame table, broadcast -> tactical frame map
 $PY -c "import sys; sys.path[:0]=['.','evaluation']; from mtah.data import load_tactical; from mtah.frames import load_frames; load_tactical(); load_frames()"
@@ -51,10 +51,14 @@ $PY analysis/p9dn_barath_dense_avg.py A B F A3 F2 F3 F4            # -> cache/ba
 #    fit it on the production + realistic-dead copies (mtah/deadsim.py). v29 / v30 need the six recipe-C members
 #    models/team_gruC*_340546b95641c360.pt (v30: seeds 0-5 and 6-11) [WEIGHTS] (mtah.members_c.external_gru_c, trained on Colab; the build refuses to
 #    train them locally). The build peaks at ~7.4 GB RAM: run it alone.
+#    v38 (final) adds four members [WEIGHTS], trained on Colab (analysis/p9fg_members_st.py, analysis/p9fo_members_pff.py):
+#      models/team_gruC_swap_met_k2_{tcn128,big,set}_s012345_st0b5bfe_340546b95641c360.pt   recipe C + SoccerTrack v2 labels (P9fg)
+#      models/team_gruC_swap_met_k2_set_s012345_pffd9becb_340546b95641c360.pt                recipe C + 10 ATD-like PFF games (P9fo)
+#    and decodes with the video's dead-ball probability at weight 1/2 and D's emission weight 1.0 (P9fh, P9fi).
 
 # 5. The submission
-$PY scripts/make_submission.py v30 evaluation/results/Tiki-Data.csv
+$PY scripts/make_submission.py v38 evaluation/results/Tiki-Data.csv
 
 # 6. Check
 $PY evaluation/validate_submission.py evaluation/results/Tiki-Data.csv
-sha256sum evaluation/results/Tiki-Data.csv                         # v30 on 15 Nov: 6ade417eb27568ac97fdba1ee463018e22d6c300d7bde5552c7dddd1aea73be2; v29 on 14 Nov: 91edea7f72bc740dc9b309074b5d658201a1dc6d3d3111a1faa972f5206232b1 (v28: ca3077cdc2aef58092451c6967926ba1e5aea43e43482b3998a15a800d94ca93)
+sha256sum evaluation/results/Tiki-Data.csv                         # v38 on 17 Nov: 4f943703be8dac94d3171797fb6f0d5ae2b31b4e1b2424586d21a7fb14bc0ab4; v30 on 15 Nov: 6ade417eb27568ac97fdba1ee463018e22d6c300d7bde5552c7dddd1aea73be2; v29 on 14 Nov: 91edea7f72bc740dc9b309074b5d658201a1dc6d3d3111a1faa972f5206232b1 (v28: ca3077cdc2aef58092451c6967926ba1e5aea43e43482b3998a15a800d94ca93)

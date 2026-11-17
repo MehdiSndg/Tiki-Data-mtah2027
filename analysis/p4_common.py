@@ -38,7 +38,17 @@ def dead_recipe_tag(metrica=(1, 2), xmask=False, nseeds=3):
 REALISTIC_RATES = {"smooth_frames": 25}                      # P9dv: the realistic-dead copies' degradation before deadsim
 
 
-def dead_classifier(degraded=True, featurize=None, extra_rates=None, draws=None, metrica=(1, 2), xmask=False, mix=False):
+def pff_dead_copies(pff, seed=0):
+    """P9fq (16 Nov): PFF World Cup games as dead-ball training copies made to look like our ATD: PFF's seen-or-estimated
+    ball (fills its short broadcast dropouts), one degraded copy each, no extra ball losses, the ball smoothed as ours;
+    no carried / simulated dead ball (PFF's own stoppages are real). Labels: PFF's event-derived dead ball."""
+    from mtah.degrade import degrade, rates_for
+    from mtah.pff import from_pff
+    for gid in pff:
+        yield degrade(from_pff(gid, ball="all"), dict(rates_for("pff"), loss_per_min=0.0, smooth_frames=25), seed=seed)
+
+
+def dead_classifier(degraded=True, featurize=None, extra_rates=None, draws=None, metrica=(1, 2), xmask=False, mix=False, pff=()):
     """draws: degradation seeds, every training match once per seed (default m1's SEED alone); metrica: the Metrica
     sample games trained on; xmask: X frames left out (dead_train_mask). v8 uses Metrica 1-3 and xmask (P9ar)."""
     from sklearn.ensemble import HistGradientBoostingClassifier
@@ -59,6 +69,10 @@ def dead_classifier(degraded=True, featurize=None, extra_rates=None, draws=None,
                     keep = dead_train_mask(c, xmask)
                     Xs.append(featurize(c)[keep].astype(np.float32))
                     ys.append(c["labels"][keep] == pm.D)
+        for c in pff_dead_copies(pff):                          # P9fq; nothing when pff is empty
+            keep = dead_train_mask(c, xmask)
+            Xs.append(featurize(c)[keep].astype(np.float32))
+            ys.append(c["labels"][keep] == pm.D)
         # memory (14 Nov: the build peaked at 9 GB inside fit): the raw matches go, and the float32 tables are moved one by
         # one into the float64 table sklearn would otherwise copy them into (same values: float32 -> float64 is exact)
         train.clear()
@@ -168,7 +182,7 @@ def dead_v4():
 CACHE_V5 = os.path.join(ROOT, "cache", "p4_ours_v5.npz")
 
 
-def dead_gru_path(draws=None, metrica=(1, 2), xmask=False, nseeds=3, mix=False):
+def dead_gru_path(draws=None, metrica=(1, 2), xmask=False, nseeds=3, mix=False, pff=()):
     """models/dead_gru<recipe>_<hash>.pt; the hash covers G's model sources and CARRY_RATES, and with mix also the
     realistic copies' recipe (mtah/deadsim.py and REALISTIC_RATES), which G._hash does not."""
     from mtah import grumodel as G
@@ -177,11 +191,12 @@ def dead_gru_path(draws=None, metrica=(1, 2), xmask=False, nseeds=3, mix=False):
     extra = repr(sorted(CARRY_RATES.items()))
     if mix:
         extra += open(os.path.join(ROOT, "mtah", "deadsim.py")).read() + repr(sorted(REALISTIC_RATES.items()))
-    return os.path.join(ROOT, "models", "dead_gru{}{}{}_{}.pt".format("" if draws == (SEED,) else "_d" + "".join(map(str, draws)), dead_recipe_tag(metrica, xmask, nseeds),
-                                                                   "_mix" if mix else "", G._hash(extra)))
+    from mtah.members_c import pff_tag
+    return os.path.join(ROOT, "models", "dead_gru{}{}{}{}_{}.pt".format("" if draws == (SEED,) else "_d" + "".join(map(str, draws)), dead_recipe_tag(metrica, xmask, nseeds),
+                                                                     "_mix" if mix else "", pff_tag(pff), G._hash(extra)))
 
 
-def dead_gru(dev=None, draws=None, metrica=(1, 2), xmask=False, nseeds=3, mix=False):
+def dead_gru(dev=None, draws=None, metrica=(1, 2), xmask=False, nseeds=3, mix=False, pff=()):
     """A GRU on the dead-ball v2 features (mtah.grumodel's net and recipe, 3 seeds) trained on the same data
     as dead_v4's classifier (7 DFL + Metrica 1-2, carried dead ball); cached in models/."""
     import torch
@@ -192,7 +207,7 @@ def dead_gru(dev=None, draws=None, metrica=(1, 2), xmask=False, nseeds=3, mix=Fa
     from m1_dead_classifier import SEED
     dev = dev or ("cuda" if torch.cuda.is_available() else "cpu")
     draws = draws or (SEED,)
-    path = dead_gru_path(draws, metrica, xmask, nseeds, mix)
+    path = dead_gru_path(draws, metrica, xmask, nseeds, mix, pff)
     if os.path.exists(path):
         st = torch.load(path, map_location=dev, weights_only=False)
         nets = []
@@ -218,6 +233,7 @@ def dead_gru(dev=None, draws=None, metrica=(1, 2), xmask=False, nseeds=3, mix=Fa
         del Fs
     else:
         train = [degrade(m, dict(rates_for(k), **CARRY_RATES), seed=d) for d in draws for m, k in zip(train, ids + ["metrica"] * len(metrica))]
+        train += list(pff_dead_copies(pff))                     # P9fq; nothing when pff is empty
         Fs = [features_v2(m).values.astype(np.float32) for m in train]
         allF = np.concatenate(Fs)
         mu, sd = np.nanmean(allF, axis=0), np.nanstd(allF, axis=0) + 1e-6
