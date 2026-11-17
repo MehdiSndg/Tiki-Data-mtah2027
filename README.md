@@ -6,7 +6,7 @@ Metrica sample data, SoccerTrack v2); nothing is trained, fitted, tuned or calib
 
 - Technical document: [`docs/Tiki-Data.md`](docs/Tiki-Data.md) (approach, assets, training data, possession rules,
   limitations, results).
-- The submission file is produced by `scripts/make_submission.py v38` (see Reproduction).
+- The submission file is produced by `scripts/make_submission.py v28` (see Reproduction).
 - The organisers' challenge documents, scorer (`evaluation/`) and starter code (`starter/`) are kept unchanged; their
   README is `docs/CHALLENGE_README.md`.
 
@@ -44,12 +44,12 @@ The teammate's member runs in its own environment: `third_party/mali/kurulum/req
 ## Trained weights
 
 Training on GPUs is not bit-reproducible across machines, so the weights the submission was built with are released
-as assets of this repository's GitHub release `v38` and go into `models/` (and `third_party/mali/outputs/` for the
-teammate's nets). The release lists each file with its sha256 and the command that trained it. The dead-ball
+as assets of this repository's GitHub release `v28` and go into `models/` (and `cache/team_in/mehmet_ali_topkara/barath/` for the
+teammate's delivered probabilities). The release lists each file with its sha256 and the command that trained it. The dead-ball
 classifier (HistGradientBoosting, fixed seed) is refitted during the build.
 
 ```bash
-bash scripts/fetch_weights.sh <owner/repo>     # downloads the release, checks SHA256SUMS, fills models/ and third_party/mali/outputs/
+bash scripts/fetch_weights.sh <owner/repo>     # downloads the release, checks SHA256SUMS, fills models/ and cache/team_in/mehmet_ali_topkara/barath/
 ```
 
 ## Reproduction
@@ -60,7 +60,7 @@ bash scripts/reproduce.sh
 
 Steps: (1) caches of the provided match (tracking and frame tables, broadcast → tactical frame map; no model, no
 label), (2) the video channel (virtual-camera frames of the tactical video, inference with the seven video models),
-(3) the teammate's component, (4) `python scripts/make_submission.py v38 evaluation/results/Tiki-Data.csv` (about
+(3) the teammate's component, (4) `python scripts/make_submission.py v28 evaluation/results/Tiki-Data.csv` (about
 7.4 GB RAM; run it alone), (5) `python evaluation/validate_submission.py evaluation/results/Tiki-Data.csv` and the
 sha256 recorded in `scripts/reproduce.sh`. With the released weights the build gives the same file byte for byte on our
 machine (checked twice).
