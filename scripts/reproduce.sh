@@ -24,6 +24,7 @@ PY=.venv/bin/python
 #   All [WEIGHTS] files: bash scripts/fetch_weights.sh <owner/repo>   (this repository's release v38, sha256 checked)
 
 # 1. Caches of the provided match (no model, no label): tracking table, frame table, broadcast -> tactical frame map
+$PY analysis/p3_yolo_pass.py                                      # -> cache/yolo/ (pretrained YOLO11m on COCO, inference only: persons for the keeper-slot check)
 $PY -c "import sys; sys.path[:0]=['.','evaluation']; from mtah.data import load_tactical; from mtah.frames import load_frames; load_tactical(); load_frames()"
 $PY analysis/h_broadcast_sync.py                                   # -> cache/broadcast_on_tactical.npz
 
