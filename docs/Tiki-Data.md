@@ -85,9 +85,9 @@ tuned or calibrated on the provided video, its tracking, or its ground truth.
 |---|---|---|---|---|
 | DFL Bundesliga open data | Sportec Solutions / IDSSE, CC BY 4.0 | DFL's official per-frame `BallPossession` and `BallStatus` flags (TRACAB tracking) | 7 matches, ~1 M frames at 25 Hz | team, boundary and dead-ball models; judge |
 | Metrica Sports sample data | Metrica's public sample repository | Metrica's event data; per-frame labels derived from events by our code (`mtah.external.metrica_event_labels`) | 3 matches | team, boundary and dead-ball models; judge |
-| SoccerTrack v2 | Scott et al., CC BY 4.0 | the dataset authors' per-frame ball status (dead / team 1 / team 2 / loose) | 10 matches (8 with status) | video head fine-tuning; three team members; judge (cross-fold) |
+| SoccerTrack v2 | Scott et al., CC BY 4.0 | the dataset authors' per-frame ball status (dead / team 1 / team 2 / loose) | 10 matches (8 with status) | video head fine-tuning; judge (cross-fold) |
 | SoccerNet ball action spotting | SoccerNet (T-DEED checkpoint released by the challenge) | SoccerNet annotators | as released | starting weights only |
-| PFF FC World Cup 2022 | PFF FC public release | PFF event data; labels derived from events by our code | 64 matches | 12 judge; 10 train one team member |
+| PFF FC World Cup 2022 | PFF FC public release | PFF event data; labels derived from events by our code | 12 matches | judge only |
 
 Training copies: each external match is degraded at our match's measured rates (one or three random draws), and
 every match is also used with the teams swapped. Since 13 Nov each match gets one more copy with a realistic dead
@@ -120,14 +120,15 @@ saw in training (DFL and Metrica: each match held out in turn, no video there).
 
 | judge | v25 (semi-Markov decoder) | v26 (+ teammate's member) | **v28 (+ dead-ball classifier on realistic copies, seven video models)** |
 |---|---|---|---|
-| DFL open data, 7 matches | 0.7403 / 0.7119 | 0.7552 / 0.7238 | v26 + 0.019 on realistic dead-ball copies |
-| Metrica sample, 3 matches | 0.7844 / 0.7793 | 0.8144 / 0.7818 | — |
+| DFL open data, 7 matches | 0.7403 / 0.7119 | 0.7552 / 0.7238 | **0.7536 / 0.7229** (realistic dead-ball copies: 0.7272 → **0.7463**) |
+| Metrica sample, 3 matches | 0.7844 / 0.7793 | 0.8144 / 0.7818 | **0.8141 / 0.7819** (realistic: 0.8020 → **0.8088**) |
+| PFF World Cup, 12 matches (team call only) | = v28 | = v28 | **0.6981 / 0.7054** |
 | SoccerTrack v2, 8 matches, with video (cross-fold) | 0.7235 / 0.7216 | (teammate's model not run there) | **0.7299 / 0.7283** |
 | public window, report only | 0.729 | 0.800 | **0.800** |
 
-The public window holds 17 possessions; one spurious 1.3 s spell moves it by 0.025, so it cannot rank versions on
-its own. Later versions (more members, a video-weighted dead ball) scored higher on SoccerTrack and PFF; the team
-submitted v28.
+The public window holds 17 possessions; one spurious 1.3 s spell moves it by 0.025, so it is read together with the
+external judges, not on its own. Later experiments (more members, a video-weighted dead ball) are recorded in
+`notes/BULGULAR.md`; they were not submitted.
 
 ## 7. Limitations
 
@@ -141,8 +142,8 @@ submitted v28.
   handling of very short controlled touches is not known to us.
 - **Dead-ball onsets.** The tracking keeps a moving ball during some dead stretches (up to 20 s); the dead-ball
   models miss part of those.
-- **Training is not bit-reproducible across GPUs.** We release the weight files; rebuilding the CSV from them is
-  byte-identical on our machine.
+- **Training is not bit-reproducible across GPUs.** We release the weight files; rebuilding the CSV from them in a clean clone
+  is byte-identical (checked on 17 Nov).
 
 ## 8. Reproduction
 
@@ -153,7 +154,7 @@ submitted v28.
 3. the teammate's component (his code, his nets trained on external data only);
 4. the trained weights in `models/` (team, boundary and dead-ball nets; video heads) — training commands are given
    beside each weight file (Kaggle / Colab scripts in `scripts/kaggle/` and `analysis/`);
-5. `python scripts/make_submission.py v28 evaluation/results/Tiki-Data.csv` (about 7.4 GB RAM);
+5. `python scripts/make_submission.py v28 evaluation/results/Tiki-Data.csv` (peaks at about 9.2 GB RAM; run it alone);
 6. `python evaluation/validate_submission.py evaluation/results/Tiki-Data.csv` and the sha256 we record there.
 
 Environment: Python 3.11 with PyTorch (CUDA 12.8), scikit-learn, numpy, pandas; the video stage needs the

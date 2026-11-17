@@ -60,8 +60,8 @@ bash scripts/reproduce.sh
 
 Steps: (1) caches of the provided match (tracking and frame tables, broadcast → tactical frame map; no model, no
 label), (2) the video channel (virtual-camera frames of the tactical video, inference with the seven video models),
-(3) the teammate's component, (4) `python scripts/make_submission.py v28 evaluation/results/Tiki-Data.csv` (about
-7.4 GB RAM; run it alone), (5) `python evaluation/validate_submission.py evaluation/results/Tiki-Data.csv` and the
+(3) the teammate's component, (4) `python scripts/make_submission.py v28 evaluation/results/Tiki-Data.csv` (peaks at
+about 9.2 GB RAM; run it alone), (5) `python evaluation/validate_submission.py evaluation/results/Tiki-Data.csv` and the
 sha256 recorded in `scripts/reproduce.sh`. With the released weights the build gives the same file byte for byte on our
 machine (checked twice).
 

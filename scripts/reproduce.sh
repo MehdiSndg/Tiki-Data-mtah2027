@@ -51,7 +51,7 @@ $PY analysis/p9dn_barath_dense_avg.py A B F A3 F2 F3 F4            # -> cache/ba
 #    the dead-ball classifier (HistGradientBoosting, fixed seed) is refitted inside step 5 from data/external; v27a-v29
 #    fit it on the production + realistic-dead copies (mtah/deadsim.py). v29 / v30 need the six recipe-C members
 #    models/team_gruC*_340546b95641c360.pt (v30: seeds 0-5 and 6-11) [WEIGHTS] (mtah.members_c.external_gru_c, trained on Colab; the build refuses to
-#    train them locally). The build peaks at ~7.4 GB RAM: run it alone.
+#    train them locally). The build peaks at ~7.4 GB RAM (v28: ~9.2 GB): run it alone.
 
 # 5. The submission
 $PY scripts/make_submission.py v28 evaluation/results/Tiki-Data.csv
